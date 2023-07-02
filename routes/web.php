@@ -50,6 +50,7 @@ Route::post('/usuarios/autenticar', [UsuarioController::class, 'autenticar']);
 
 // Rutas para el controlador ResponsableController
 Route::resource('responsables', ResponsableController::class);
+Route::post('/responsables', [ResponsableController::class, 'store'])->name('responsables.store');
 
 // Rutas para el controlador HotelController
 Route::resource('hoteles', HotelController::class);

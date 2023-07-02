@@ -12,6 +12,7 @@
     <label for="telefono">Teléfono:</label>
     <input type="text" name="telefono" id="telefono" required>
   </div>
+  
   <div>
     <label for="establecimiento_id">Establecimiento:</label>
     <select name="establecimiento_id" id="establecimiento_id" required>
