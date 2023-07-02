@@ -3,47 +3,64 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Responsable;
 
 class ResponsableController extends Controller
 {
-    public function index(){
-        $usuarios = Usuario::All();
-        return view("usuarios.mostrar")
-            ->with("usuarios", $usuarios);
+    public function index()
+    {
+        $responsables = Responsable::all();
+        return view("responsables.mostrar")
+            ->with("responsables", $responsables);
     }
 
-    public function registrar(){
-        return view("usuarios.registrar");
+    public function create()
+    {
+        return view("responsables.registrar");
     }
 
-    public function guardar(Request $request){
+    public function store(Request $request)
+    {
         $validacion = $request->validate([
             "nombres" => "required",
             "apellidos" => "required"
         ]);
-        
-        Usuario::create($request->all());
-        return redirect("/usuarios/mostrar");
+
+        Responsable::create($request->all());
+        return redirect("/responsables/mostrar");
     }
 
-    public function login(){
-        return view("autenticacion_form");
+    public function edit($id)
+    {
+        $responsable = Responsable::find($id);
+        return view("responsables.editar")
+            ->with("responsable", $responsable);
     }
 
-    public function autenticar(Request $request){
-        $username = $request->input("username");
-        $password = $request->input("password");
+    public function update(Request $request, $id)
+    {
+        $validacion = $request->validate([
+            "nombres" => "required",
+            "apellidos" => "required"
+        ]);
 
-        if(Usuario::where('username',$username)->first("username")==null){
-            return "no existe";
-        }
-        else{
-            if(Usuario::where('password',$password)->first("password")!=null){
-                return "logueado";
-            }else{
-                return "no existe";
-            }
-        }
+        $responsable = Responsable::find($id);
+        $responsable->update($request->all());
+        return redirect("/responsables/mostrar");
     }
+
+    public function destroy($id)
+    {
+        $responsable = Responsable::find($id);
+        $responsable->delete();
+        return redirect("/responsables/mostrar");
+    }
+
+    public function show($id)
+{
+    $responsable = Responsable::find($id);
+    return view("responsables.mostrar-detalle")
+        ->with("responsable", $responsable);
+}
 }
 
